@@ -1,23 +1,16 @@
 function highlightHTMLContent(htmlContent, plainText, plainTextPositions) {
-    let highlightedContent = htmlContent;
-  
+    let hgContent = htmlContent;
     plainTextPositions.sort((a, b) => b.start - a.start);
   
-    for (const { start, end } of plainTextPositions) {
+    for (const { c, d } of plainTextPositions) {
 
-      const htmlStart = highlightedContent.indexOf(plainText.substring(0, start));
-      const htmlEnd = highlightedContent.indexOf(plainText.substring(0, end)) + end - start;
+      const startingContent = hgContent.indexOf(plainText.substring(0, c));
+      const endingContent = hgContent.indexOf(plainText.substring(0, d)) + d - c;
   
-      const highlightedPortion = `<span style="background-color: yellow;">${highlightedContent.substring(htmlStart, htmlEnd)}</span>`;
+      const highlightedPortion = `<span style="background-color: yellow;">${hgContent.substring(startingContent, endingContent)}</span>`;
   
-      highlightedContent = highlightedContent.substring(0, htmlStart) + highlightedPortion + highlightedContent.substring(htmlEnd);
+      hgContent = hgContent.substring(0, startingContent) + highlightedPortion + hgContent.substring(endingContent);
     }
   
-    return highlightedContent;
+    return hgContent;
   }
-  
-  const htmlContent = '<p>SteelEye is the best !!!</p>';
-  const plainText = 'Krish works at SteelEye';
-  const plainTextPositions = [{ start: 0, end: 12 }, { start: 18, end: 29 }];
-  console.log(highlightHTMLContent(htmlContent, plainText, plainTextPositions));
-  
